@@ -7941,6 +7941,14 @@ react-error-overlay@^5.1.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.0.tgz#c516995a5652e7bfbed8b497910d5280df74a7e8"
   integrity sha512-akMy/BQT5m1J3iJIHkSb4qycq2wzllWsmmolaaFVnb+LPV9cIJ/nTud40ZsiiT0H3P+/wXIdbjx2fzF61OaeOQ==
 
+react-grid-system@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-4.3.1.tgz#10c115d2fae05c30a1f5720701e7f0229048eda0"
+  integrity sha512-gZjYip+qG8SFk9EmLI0mU7tOm4Et8OdBi478dvADFu/4x9v0USoxAzk7r6V0vL56R9gs5p+qAam8c9uep5qnvQ==
+  dependencies:
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
+
 react-scripts@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-2.1.1.tgz#c2959a756b0b61d3090adece0d7aedd324dff8a5"
