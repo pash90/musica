@@ -31,9 +31,17 @@ class Track extends React.Component {
 			isPlayingSample: false,
 			isMuted: false,
 			currentTime: 0,
+			width: 0,
 		};
 
 		this.audioRef = React.createRef();
+		this.progressRef = React.createRef();
+	}
+
+	componentDidMount() {
+		this.setState(prevState => ({
+			width: this.progressRef.current.offsetWidth,
+		}));
 	}
 
 	playSample = () => {
@@ -67,6 +75,15 @@ class Track extends React.Component {
 		this.setState(prevState => ({
 			currentTime,
 		}));
+	};
+
+	seekNewTrackPosition = event => {
+		const currentTime = Math.round(
+			(event.nativeEvent.offsetX * this.audioRef.current.duration) /
+				this.state.width
+		);
+
+		this.audioRef.current.currentTime = currentTime;
 	};
 
 	componentDidUpdate(prevProps) {
@@ -109,7 +126,10 @@ class Track extends React.Component {
 									: `00:${Math.round(player.duration)}`}
 							</p>
 
-							<div className="progress-container">
+							<div
+								className="progress-container"
+								ref={this.progressRef}
+								onClick={this.seekNewTrackPosition}>
 								<div
 									className="progress"
 									style={{
@@ -118,8 +138,9 @@ class Track extends React.Component {
 												? 0
 												: `${(currentTime * 100) /
 														Math.round(player.duration)}%`,
-									}}
-								/>
+									}}>
+									<div className="handle" />
+								</div>
 							</div>
 						</div>
 
