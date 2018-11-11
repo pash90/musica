@@ -1,6 +1,7 @@
 /** Libraries */
 import React from 'react';
 import { Container, Row, Col } from 'react-grid-system';
+import { Link } from 'react-router-dom';
 
 /** Assets */
 import search from '../assets/search.svg';
@@ -47,6 +48,13 @@ class Search extends React.Component {
 								/>
 								<img src={search} alt="search-icon" />
 							</div>
+
+							<Link
+								className="search-button margin-top-2"
+								to="/"
+								onClick={this.props.onSearchRequest}>
+								Go
+							</Link>
 						</Col>
 					</Row>
 				</Container>

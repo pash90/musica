@@ -53,7 +53,7 @@ class Album extends React.Component {
 
 		if (isFetchingSongs) {
 			return (
-				<Container className="flex center">
+				<Container className="flex center margin-top-4">
 					<ClipLoader loading={true} size={32} color="#09249E" />
 				</Container>
 			);

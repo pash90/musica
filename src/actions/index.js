@@ -7,7 +7,9 @@ const axiosInstance = Axios.create({
 });
 
 export const searchForAlbums = term =>
-	axiosInstance.get(`search?term=${term}&entity=album`);
+	axiosInstance.get(
+		`search?term=${term.replace(new RegExp(' ', 'g'), '+')}&entity=album`
+	);
 
 export const searchForSongs = albumId =>
 	axiosInstance.get(`lookup?id=${albumId}&entity=song`);
