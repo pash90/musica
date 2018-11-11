@@ -1,30 +1,87 @@
 /** Libraries */
 import React, { Component } from 'react';
+import { setConfiguration } from 'react-grid-system';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-/** Assets */
-import logo from './logo.svg';
+/** Components */
+import Search from '../Search';
+import Results from '../Results';
+import Album from '../Results/Album';
+
+/** Helpers */
+import { searchForAlbums } from '../actions';
 
 /** Styles */
 import './index.scss';
 
+/** Initialisation */
+setConfiguration({
+	gutterWidth: 16,
+	containerWidths: [540, 750, 960, 960],
+});
+
 class App extends Component {
+	state = {
+		isSearching: false,
+		searchResults: undefined,
+		searchTerm: undefined,
+	};
+
+	updateSearchTerm = searchTerm =>
+		this.setState(prevState => ({
+			searchTerm,
+		}));
+
+	startSearching = () =>
+		this.setState(
+			prevState => ({
+				isSearching: true,
+				searchResults: undefined,
+			}),
+			this.performSearch
+		);
+
+	performSearch = () => {
+		const { searchTerm } = this.state;
+
+		searchForAlbums(searchTerm)
+			.then(response => {
+				this.setState(prevState => ({
+					searchResults: response.data.results,
+				}));
+			})
+			.catch(error => {
+				console.log(error);
+				return Promise.reject(error);
+			})
+			.then(_ =>
+				this.setState(prevState => ({
+					isSearching: false,
+				}))
+			);
+	};
+
 	render() {
+		const { searchResults, isSearching } = this.state;
+
 		return (
-			<div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<p>
-						Edit <code>src/App.js</code> and save to reload.
-					</p>
-					<a
-						className="App-link"
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer">
-						Learn React
-					</a>
-				</header>
-			</div>
+			<BrowserRouter>
+				<main>
+					<Search
+						onSearchTermUpdate={this.updateSearchTerm}
+						onSearchRequest={this.startSearching}
+					/>
+
+					<Route
+						exact
+						path="/"
+						render={() => (
+							<Results isSearching={isSearching} results={searchResults} />
+						)}
+					/>
+					<Route path="/album/:id" component={Album} />
+				</main>
+			</BrowserRouter>
 		);
 	}
 }

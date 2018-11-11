@@ -1,14 +1,82 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}
+
+/** Layout **/
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	&.top {
+		align-items: flex-start;
+	}
+
+	&.center {
+		justify-content: center;
+	}
+
+	&.end {
+		justify-content: flex-end;
+	}
+
+	&.bottom {
+		align-items: flex-end;
+	}
+
+	&.between {
+		justify-content: space-between;
+	}
+
+	&.col {
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+
+		&.top {
+			justify-content: flex-start;
+		}
+
+		&.center {
+			align-items: center;
+		}
+
+		&.end {
+			align-items: flex-end;
+		}
+
+		&.bottom {
+			justify-content: flex-end;
+		}
+	}
+
+	&.wrap {
+		flex-wrap: wrap;
+	}
+}
+
+/** Margins & Padding **/
+@for $i from 0 through 10 {
+	.margin-top-#{$i} {
+		margin-top: $i * 8px;
+	}
+
+	.padding-#{$i} {
+		padding: $i * 8px;
+	}
 }
