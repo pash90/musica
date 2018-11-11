@@ -78,12 +78,14 @@ class Track extends React.Component {
 	};
 
 	seekNewTrackPosition = event => {
-		const currentTime = Math.round(
-			(event.nativeEvent.offsetX * this.audioRef.current.duration) /
-				this.state.width
-		);
+		if (this.state.width > 0) {
+			const currentTime = Math.round(
+				(event.nativeEvent.offsetX * this.audioRef.current.duration) /
+					this.state.width
+			);
 
-		this.audioRef.current.currentTime = currentTime;
+			this.audioRef.current.currentTime = currentTime;
+		}
 	};
 
 	componentDidUpdate(prevProps) {

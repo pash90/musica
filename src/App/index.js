@@ -1,7 +1,7 @@
 /** Libraries */
 import React, { Component } from 'react';
 import { setConfiguration } from 'react-grid-system';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 /** Components */
 import Search from '../Search';
@@ -69,22 +69,39 @@ class App extends Component {
 			<BrowserRouter>
 				<>
 					<Header />
-					<main>
-						<Search
-							onSearchTermUpdate={this.updateSearchTerm}
-							onSearchRequest={this.startSearching}
-							hasResults={searchResults ? true : false}
-						/>
-
+					<Switch>
 						<Route
 							exact
 							path="/"
 							render={() => (
-								<Results isSearching={isSearching} results={searchResults} />
+								<main>
+									<Search
+										onSearchTermUpdate={this.updateSearchTerm}
+										onSearchRequest={this.startSearching}
+										hasResults={searchResults ? true : false}
+									/>
+
+									<Results isSearching={isSearching} results={searchResults} />
+								</main>
 							)}
 						/>
-						<Route path="/album/:id" component={Album} />
-					</main>
+
+						<Route
+							exact
+							path="/album/:id"
+							render={props => (
+								<main>
+									<Search
+										onSearchTermUpdate={this.updateSearchTerm}
+										onSearchRequest={this.startSearching}
+										hasResults={true}
+									/>
+
+									<Album {...props} />
+								</main>
+							)}
+						/>
+					</Switch>
 				</>
 			</BrowserRouter>
 		);
