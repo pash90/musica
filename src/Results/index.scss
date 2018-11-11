@@ -68,6 +68,21 @@
 
 			p {
 				font-size: 12px;
+				width: 80px;
+			}
+
+			.progress-container {
+				height: 2px;
+				background-color: #fff;
+				margin-left: 8px;
+				width: calc(100% - 88px);
+				border-radius: 2px;
+
+				.progress {
+					height: 100%;
+					background-color: #4a4a4a;
+					border-radius: 2px;
+				}
 			}
 		}
 	}

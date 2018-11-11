@@ -25,6 +25,7 @@ class Album extends React.Component {
 	state = {
 		isFetchingSongs: true,
 		results: undefined,
+		currentPlayingTrack: undefined,
 	};
 
 	componentDidMount() {
@@ -42,8 +43,13 @@ class Album extends React.Component {
 		});
 	}
 
+	updateCurrentPlayingTrack = trackId => () =>
+		this.setState(prevState => ({
+			currentPlayingTrack: trackId,
+		}));
+
 	render() {
-		const { isFetchingSongs, results } = this.state;
+		const { isFetchingSongs, results, currentPlayingTrack } = this.state;
 
 		if (isFetchingSongs) {
 			return (
@@ -53,9 +59,8 @@ class Album extends React.Component {
 			);
 		}
 
-		console.log(results);
 		return (
-			<Container className="album-view">
+			<Container fluid sm md className="album-view">
 				<Row>
 					{results
 						.filter(result => result.wrapperType === 'track')
@@ -67,6 +72,8 @@ class Album extends React.Component {
 								art={result.artworkUrl100}
 								year={Moment(result.releaseDate).year()}
 								artist={result.artistName}
+								onPlay={this.updateCurrentPlayingTrack(result.trackId)}
+								isCurrentTrack={currentPlayingTrack === result.trackId}
 							/>
 						))}
 				</Row>

@@ -15,6 +15,8 @@ import unmuted from '../assets/unmuted.svg';
  * @property {number} year
  * @property {string} art
  * @property {string} artist
+ * @property {boolean} isCurrentTrack
+ * @property {Function} onPlay
  */
 
 /**
@@ -28,7 +30,7 @@ class Track extends React.Component {
 		this.state = {
 			isPlayingSample: false,
 			isMuted: false,
-			currentTime: '00:00',
+			currentTime: 0,
 		};
 
 		this.audioRef = React.createRef();
@@ -40,6 +42,8 @@ class Track extends React.Component {
 		}));
 
 		this.audioRef.current.play();
+
+		this.props.onPlay();
 	};
 
 	pauseSample = () => {
@@ -61,10 +65,15 @@ class Track extends React.Component {
 		const currentTime = Math.round(event.target.currentTime);
 
 		this.setState(prevState => ({
-			currentTime:
-				currentTime < 10 ? `00:0${currentTime}` : `00:${currentTime}`,
+			currentTime,
 		}));
 	};
+
+	componentDidUpdate(prevProps) {
+		if (!this.props.isCurrentTrack && prevProps.isCurrentTrack) {
+			this.pauseSample();
+		}
+	}
 
 	render() {
 		const { name, art, artist, year, previewUrl } = this.props;
@@ -91,13 +100,27 @@ class Track extends React.Component {
 							/>
 						</div>
 
-						<div className="time-display">
+						<div className="time-display flex">
 							<p>
-								{currentTime} /{' '}
+								{currentTime < 10 ? `00:0${currentTime}` : `00:${currentTime}`}{' '}
+								/{' '}
 								{player === null
 									? '00:00'
 									: `00:${Math.round(player.duration)}`}
 							</p>
+
+							<div className="progress-container">
+								<div
+									className="progress"
+									style={{
+										width:
+											player === null
+												? 0
+												: `${(currentTime * 100) /
+														Math.round(player.duration)}%`,
+									}}
+								/>
+							</div>
 						</div>
 
 						<div className="control flex center" onClick={this.toggleVolume}>
