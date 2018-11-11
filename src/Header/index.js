@@ -1,6 +1,7 @@
 /** Libraries */
 import React from 'react';
 import { Container, Row, Col, Hidden, Visible } from 'react-grid-system';
+import { Link } from 'react-router-dom';
 
 /** Assets */
 import logo from '../assets/logo.svg';
@@ -31,7 +32,29 @@ class Header extends React.Component {
 							</Hidden>
 
 							<Visible xs>
-								<img src={menu} alt="menu-icon" />
+								<div
+									className="menu-icon flex center"
+									onClick={this.props.onMenuClick}>
+									<img src={menu} alt="menu-icon" />
+								</div>
+							</Visible>
+
+							<Visible xs>
+								<div
+									className={`mobile-menu ${
+										this.props.showMenu ? 'show' : ''
+									}`}>
+									<ul
+										className="flex col menu"
+										onClick={this.props.onMenuClick}>
+										<li>
+											<Link to="/">Search</Link>
+										</li>
+										<li>Contact</li>
+										<li>Twitter</li>
+										<li>Instagram</li>
+									</ul>
+								</div>
 							</Visible>
 						</Col>
 					</Row>

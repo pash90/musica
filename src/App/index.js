@@ -1,5 +1,5 @@
 /** Libraries */
-import React, { Component } from 'react';
+import React from 'react';
 import { setConfiguration } from 'react-grid-system';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -21,11 +21,12 @@ setConfiguration({
 	containerWidths: [540, 750, 960, 960],
 });
 
-class App extends Component {
+class App extends React.PureComponent {
 	state = {
 		isSearching: false,
 		searchResults: undefined,
 		searchTerm: undefined,
+		showMenu: false,
 	};
 
 	updateSearchTerm = searchTerm =>
@@ -62,19 +63,24 @@ class App extends Component {
 			);
 	};
 
+	toggleMobileMenu = () =>
+		this.setState(prevState => ({
+			showMenu: !prevState.showMenu,
+		}));
+
 	render() {
-		const { searchResults, isSearching } = this.state;
+		const { searchResults, isSearching, showMenu } = this.state;
 
 		return (
 			<BrowserRouter>
 				<>
-					<Header />
+					<Header onMenuClick={this.toggleMobileMenu} showMenu={showMenu} />
 					<Switch>
 						<Route
 							exact
 							path="/"
 							render={() => (
-								<main>
+								<main className={showMenu ? 'move-to-left' : ''}>
 									<Search
 										onSearchTermUpdate={this.updateSearchTerm}
 										onSearchRequest={this.startSearching}
@@ -90,7 +96,7 @@ class App extends Component {
 							exact
 							path="/album/:id"
 							render={props => (
-								<main>
+								<main className={showMenu ? 'move-to-left' : ''}>
 									<Search
 										onSearchTermUpdate={this.updateSearchTerm}
 										onSearchRequest={this.startSearching}
