@@ -8,6 +8,7 @@ import Search from '../Search';
 import Results from '../Results';
 import Album from '../Results/Album';
 import Header from '../Header';
+import Footer from '../Footer';
 
 /** Helpers */
 import { searchForAlbums } from '../actions';
@@ -108,6 +109,7 @@ class App extends React.PureComponent {
 							)}
 						/>
 					</Switch>
+					<Footer />
 				</>
 			</BrowserRouter>
 		);
