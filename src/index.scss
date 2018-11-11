@@ -80,3 +80,7 @@ code {
 		padding: $i * 8px;
 	}
 }
+
+main {
+	height: calc(100vh - 48px);
+}

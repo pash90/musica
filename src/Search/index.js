@@ -13,6 +13,7 @@ import './index.scss';
  * @typedef SearchProps
  * @property {(searchTerm: string) => void} onSearchTermUpdate
  * @property {(event: any) => void} onSearchRequest
+ * @property {boolean} hasResults
  */
 
 /**
@@ -38,7 +39,9 @@ class Search extends React.Component {
 							sm={8}
 							md={6}
 							offset={{ xs: 1, sm: 2, md: 3 }}
-							className="search-box flex col center">
+							className={`search-box flex col center ${
+								this.props.hasResults ? 'reduce' : ''
+							}`}>
 							<h2>Search for music, games, videos and many more</h2>
 
 							<div className="search flex between margin-top-2 padding-1">

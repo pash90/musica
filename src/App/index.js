@@ -7,6 +7,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Search from '../Search';
 import Results from '../Results';
 import Album from '../Results/Album';
+import Header from '../Header';
 
 /** Helpers */
 import { searchForAlbums } from '../actions';
@@ -66,21 +67,25 @@ class App extends Component {
 
 		return (
 			<BrowserRouter>
-				<main>
-					<Search
-						onSearchTermUpdate={this.updateSearchTerm}
-						onSearchRequest={this.startSearching}
-					/>
+				<>
+					<Header />
+					<main>
+						<Search
+							onSearchTermUpdate={this.updateSearchTerm}
+							onSearchRequest={this.startSearching}
+							hasResults={searchResults ? true : false}
+						/>
 
-					<Route
-						exact
-						path="/"
-						render={() => (
-							<Results isSearching={isSearching} results={searchResults} />
-						)}
-					/>
-					<Route path="/album/:id" component={Album} />
-				</main>
+						<Route
+							exact
+							path="/"
+							render={() => (
+								<Results isSearching={isSearching} results={searchResults} />
+							)}
+						/>
+						<Route path="/album/:id" component={Album} />
+					</main>
+				</>
 			</BrowserRouter>
 		);
 	}

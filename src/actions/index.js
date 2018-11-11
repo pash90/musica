@@ -10,7 +10,7 @@ export const searchForAlbums = term => {
 	if (!term || term.length === 0) {
 		return Promise.resolve({
 			data: {
-				results: [],
+				results: undefined,
 			},
 		});
 	}
